@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>
+      {% block title %}
+        Mis Marcadores!
+      {% endblock %}
+    </title>
+    {% block stylesheets %}
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="/css/open-iconic-bootstrap.css" />
+      <link rel="stylesheet" href="/css/offcanvas.css" />
+    {% endblock %}
+  </head>
+  <body class="bg-light">
+    {% block body %}
+      {% block menu %}
+        {% include 'index/_menu.html.twig' %}
+      {% endblock %}
+      <div role="main" class="container">
+        {% block contenedor_principal %}
 
-        {% block javascripts %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+        {% endblock %}
+      </div>
+      {% block javascript %}
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/offcanvas.js"></script>
+      {% endblock %}
+    {% endblock %}
+  </body>
 </html>

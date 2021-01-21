@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block contenedor_principal %}
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">
+      Mis marcadores
+    </h6>
+
+    <div class="media text-muted pt-3">
+      <svg width="32" height="32" class="mr-2 rounded">
+        <rect width="32" height="32" style="fill:red;" />
+      </svg>
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">  
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div> 
+            <a href="#" target="_blank">
+              <strong class="text-gray-dark">Nombre marcador 1</strong>
+            </a>
+            <span class="d-block">Nombre categoría 1</span>
+          </div>
+          <div class="d-flex">                  
+            <a href="#" class="btn btn-link mg-3">
+                <span class="oi oi-pencil" title="Editar" aria-hidden="true"></span>
+            </a>
+            <a href="#" class="btn btn-link mg-3">
+              <span class="oi oi-delete" title="Eliminar" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+  </div>
+{% endblock %}
+
