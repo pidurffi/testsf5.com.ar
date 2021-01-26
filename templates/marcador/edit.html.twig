@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Marcador{% endblock %}
+
+{% block contenedor_principal %}
+    <h1>Edit Marcador</h1>
+
+    {{ include('marcador/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('marcador_index') }}">back to list</a>
+
+{% endblock %}

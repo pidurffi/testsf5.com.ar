@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marcador{% endblock %}
+
+{% block contenedor_principal %}
+    <h1>Marcador</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ marcador.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ marcador.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ marcador.url }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('marcador_index') }}">back to list</a>
+
+    <a href="{{ path('marcador_edit', {'id': marcador.id}) }}">edit</a>
+
+    {{ include('marcador/_delete_form.html.twig') }}
+{% endblock %}
