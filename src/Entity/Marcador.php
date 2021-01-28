@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Entity;
+use App\Validator as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use App\Repository\MarcadorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +28,7 @@ class Marcador
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Url
+     * @AppAssert\UrlAccesible
      */
     private $url;
 
