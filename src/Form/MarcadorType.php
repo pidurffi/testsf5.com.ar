@@ -15,6 +15,7 @@ class MarcadorType extends AbstractType
             ->add('nombre')
             ->add('url')
             ->add('categoria')
+            ->add('favorito')
         ;
     }
 

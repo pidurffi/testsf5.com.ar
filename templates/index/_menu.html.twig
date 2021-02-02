@@ -1,3 +1,6 @@
+{% set app_ruta = app.request.attributes.get('_route')%}
+{% set nombre_categoria = app.request.attributes.get('categoria')%}
+
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
   <a class="navbar-brand" href="{{ path('app_index') }}">Mis marcadores</a>
   <button class="navbar-toggler p-0 border-0"
@@ -8,9 +11,12 @@
 
   <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a class="nav-link" href="#">Todas</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Categoria 1</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Categoria 2</a></li>
+      <li class="nav-item"><a class="nav-link {{'app_favoritos' == app_ruta and nombre_categoria is empty ? 'active'}}" href="{{ path('app_favoritos') }}">Favoritos</a></li>
+      <li class="nav-item"><a class="nav-link {{'app_index' == app_ruta and nombre_categoria is empty ? 'active'}}" href="{{ path('app_index') }}">Todas</a></li>
+      {# categoria_repository es una variable global que definimos en twig.yaml (parece que es un objeto) #}
+      {% for categoria in categoria_repository.findAll %}
+        <li class="nav-item"><a class="nav-link" href="{{ path('app_index', {categoria:categoria.nombre}) }}">{{ categoria.nombre }}</a></li>
+      {% endfor %}
     </ul>
     <div class="d-md-flex my-2 my-lg-0">
       <a class="btn btn-outline-success mr-2 w-100 mb-3 mb-sm-0" title="Gestión de categorias" href="#">

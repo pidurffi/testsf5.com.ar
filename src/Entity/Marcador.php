@@ -7,6 +7,7 @@ use App\Repository\MarcadorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass=MarcadorRepository::class)
  */
 class Marcador
@@ -31,13 +32,32 @@ class Marcador
      * @AppAssert\UrlAccesible
      */
     private $url;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity=Categoria::class)
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank
      */
     private $categoria;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creado;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $favorito;
+
+    /**
+     * @ORM\PrePersist
+     */
+    private function setValorDefecto() {
+        
+        $this->creado = new \DateTime('NOW');
+    }
+
 
     public function getId(): ?int
     {
@@ -76,6 +96,30 @@ class Marcador
     public function setCategoria(?Categoria $categoria): self
     {
         $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getCreado(): ?\DateTimeInterface
+    {
+        return $this->creado;
+    }
+
+    public function setCreado(\DateTimeInterface $creado): self
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+
+    public function getFavorito(): ?bool
+    {
+        return $this->favorito;
+    }
+
+    public function setFavorito(?bool $favorito): self
+    {
+        $this->favorito = $favorito;
 
         return $this;
     }

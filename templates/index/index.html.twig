@@ -22,7 +22,12 @@
             </a>
             <span class="d-block">{{ marcador.categoria.nombre }}</span>
           </div>
-          <div class="d-flex">                  
+          <div class="d-flex">   
+            
+            <a href="#" class="btn btn-link mg-3 {{ marcador.favorito ? 'activo'}}">
+                <span class="oi oi-star" title="Favorito" aria-hidden="true"></span>
+            </a>
+
             <a href="{{ path('marcador_edit', {id: marcador.id}) }}" class="btn btn-link mg-3">
                 <span class="oi oi-pencil" title="Editar" aria-hidden="true"></span>
             </a>
