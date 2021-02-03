@@ -24,7 +24,10 @@
           </div>
           <div class="d-flex">   
             
-            <a href="#" class="btn btn-link mg-3 {{ marcador.favorito ? 'activo'}}">
+            <a href="#" 
+              class="btn btn-link mg-3 favorito {{ marcador.favorito ? 'activo'}}"
+              data-id="{{ marcador.id }}"
+              data-url="{{ path('app_editar_favorito') }}">
                 <span class="oi oi-star" title="Favorito" aria-hidden="true"></span>
             </a>
 
