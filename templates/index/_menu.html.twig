@@ -26,14 +26,16 @@
         <span class="oi oi-plus" title="añadir" aria-hidden="true"></span>
       </a>
     </div>
-    <form class="form-inline">
-        <input class="form-control mr-sm-2"
-          type="text"
-          placeholder="Buscar"
-          aria-label="Search" />
-        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">
-          Buscar
-        </button>
-      </form>
+      {{ 
+        render(
+          controller(
+            'App\\Controller\\IndexController::busqueda',
+            {
+              busqueda: busqueda is defined ? busqueda
+            }
+          )
+        )
+        }}
+
   </div>
 </nav>

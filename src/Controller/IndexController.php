@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\BuscadorType;
 use App\Repository\CategoriaRepository;
 use App\Repository\MarcadorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,6 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
+    /**
+     * @route("
+     * /buscar/{busqueda}", 
+     * name="app_busqueda", 
+     * defaults={
+     *  "busqueda": ""
+     * }
+     *)
+     */
+    public function busqueda(string $busqueda, MarcadorRepository $marcadorRepository, Request $request)
+    {
+        $formularioBusqueda = $this->createForm(BuscadorType::class);
+        return $this->render('common/_buscador.html.twig',[
+            'formulario_busqueda' => $formularioBusqueda->createView()
+        ]);
+    }
+
     /**
      * @route("/editar-favorito", name="app_editar_favorito" )
      */
