@@ -12,9 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
+    public const ELEMENTOS_POR_PAGINA = 5;
     /**
-     * @route("
-     * /buscar/{busqueda}", 
+     * @route(
+     * "/buscar/{busqueda}", 
      * name="app_busqueda", 
      * defaults={
      *  "busqueda": ""
@@ -24,6 +25,25 @@ class IndexController extends AbstractController
     public function busqueda(string $busqueda, MarcadorRepository $marcadorRepository, Request $request)
     {
         $formularioBusqueda = $this->createForm(BuscadorType::class);
+        $formularioBusqueda->handleRequest($request);
+        $marcadores=[];
+        if($formularioBusqueda->isSubmitted()) {
+            if($formularioBusqueda->isValid()){
+                $busqueda = $formularioBusqueda->get('busqueda')->getData();
+            }
+        }
+
+        if(!empty($busqueda)){
+            $marcadores = $marcadorRepository->buscarPorNombre($busqueda);
+        }
+
+        if(!empty($busqueda) || $formularioBusqueda->isSubmitted()) {
+            return $this->render('index/index.html.twig',[
+                'formulario_busqueda' => $formularioBusqueda->createView(),
+                'marcadores' => $marcadores
+            ]);
+        }
+
         return $this->render('common/_buscador.html.twig',[
             'formulario_busqueda' => $formularioBusqueda->createView()
         ]);
@@ -70,24 +90,43 @@ class IndexController extends AbstractController
     
     /**
      * @Route(
-     *  "/{categoria}", 
+     *  "/{categoria}/{pagina}", 
      *  name="app_index",
-     *  defaults={"categoria":""}
+     *  defaults={
+     *      "categoria":"todas",
+     *      "pagina":1
+     *  },
+     *  requirements={
+     *      "pagina"="\d+"
+     * }
      * )
      */
-    public function index(string $categoria, CategoriaRepository $categoriaRepository, MarcadorRepository $marcadorRepository)
+    public function index(string $categoria, int $pagina,  CategoriaRepository $categoriaRepository, MarcadorRepository $marcadorRepository)
     {
-        if (!empty($categoria)) {
+        $elementosPorPagina = self::ELEMENTOS_POR_PAGINA;
+
+        $categoria = (int)$categoria > 0 ? (int)$categoria : $categoria;
+        if(is_int($categoria)){
+            $categoria = 'todas';
+            $pagina = $categoria;
+        }
+
+        if (($categoria) && 'todas' !== $categoria) {
             if(!$categoriaRepository->findByNombre($categoria)){
                 throw $this->createNotFoundException("La categoría '$categoria' no existe.");
             }
-            $marcadores = $marcadorRepository->buscarPorNombreCategoria($categoria);
+            $marcadores = $marcadorRepository->buscarPorNombreCategoria($categoria, $pagina, self::ELEMENTOS_POR_PAGINA);
         } else {
-            $marcadores = $marcadorRepository->findAll();
+            $marcadores = $marcadorRepository->buscarTodos($pagina, self::ELEMENTOS_POR_PAGINA);
         }
         
         return $this->render('index/index.html.twig', [
             'marcadores' => $marcadores,
+            'pagina' => $pagina,
+            'parametros_ruta' => [
+                'categoria' =>$categoria
+            ],
+            'elementos_por_pagina' => $elementosPorPagina
         ]);
     }
 }

@@ -26,16 +26,22 @@
         <span class="oi oi-plus" title="añadir" aria-hidden="true"></span>
       </a>
     </div>
+
+    {% if formulario_busqueda is defined %}
+      {{
+      include('common/_buscador.html.twig', {formulario_busqueda: formulario_busqueda})
+      }}
+    {% else %}
       {{ 
         render(
           controller(
-            'App\\Controller\\IndexController::busqueda',
-            {
-              busqueda: busqueda is defined ? busqueda
-            }
+              'App\\Controller\\IndexController::busqueda',
+              {
+                busqueda: busqueda is defined ? busqueda
+              }
           )
         )
-        }}
-
+      }}
+    {% endif %}  
   </div>
 </nav>
